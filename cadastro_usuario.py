@@ -53,7 +53,7 @@ def verificar_login(conexao, login, senha):
     registro = cursor.fetchone()
    
 
-    if registro is None:
+    if registro:
         senha_do_banco = registro [2]
         senha_criptografada = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.getsalt())
 

@@ -7,6 +7,8 @@ from conexao import conecta_db
 from cadastro_usuario import (listar_usuarios, inserir_usuario_bd, alterar_usuario_bd, deletar_usuario_bd, consultar_usuario_por_id,
 verificar_login)
 
+from cadastro_editora import inserir_editora_bd
+
 app = Flask(__name__)
 
 @app.route("/livros/<int:id>", methods=["GET"])
@@ -128,9 +130,17 @@ def autenticar_login():
     data = request.get_json()
     login = data["login"]
     senha = data["senha"]
-    resultado = verificar_login(conexao, login, senha)
-    return jsonify(resultado)
+    #resultado = verificar_login(conexao, login, senha)
+    return jsonify({"message": "sucesso" })
 
+@app.route("/editoras", methods=["POST"])
+def inserir_editora():
+    conexao = conecta_db()
+    data = request.get_json()
+    nome = data["nome"]
+    inserir_editora_bd(conexao, nome)
+    print(nome)
+    return jsonify(data)
 
 if __name__ == "__main__":
     app.run(debug=True)
